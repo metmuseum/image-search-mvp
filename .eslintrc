@@ -1,7 +1,9 @@
 {
-  "parser": "babel-eslint",
-  "plugins": ["react"],
-  "extends": ["airbnb"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+  },
+  "plugins": ["react", "jsx-a11y"],
   "globals": {
     "React": true,
     "document": true,
