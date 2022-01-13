@@ -19,7 +19,7 @@
     "no-tabs": 0,
     "arrow-body-style": 0,
     "implicit-arrow-linebreak": 0,
-    "comma-dangle": ["warn", "never"],
+    "comma-dangle": 0,
     "arrow-parens": [2, "as-needed"],
     "react/prefer-stateless-function": "warn",
     "react/self-closing-comp": [
