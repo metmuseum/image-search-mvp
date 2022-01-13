@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createWorker } from 'tesseract.js';
 
-
-
 const ImageInput = ({ searchObjects }) => {
 	const [imageInputText, setImageInputText] = useState('Scan Accession #');
 	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*$)/i;
@@ -11,12 +9,12 @@ const ImageInput = ({ searchObjects }) => {
 	const worker = createWorker({
 		logger: m => {
 			console.log(m);
-			let text = "Processing...";
-			if (m.status === "recognizing text") {
+			let text = 'Processing...';
+			if (m.status === 'recognizing text') {
 				text += ` ${Math.floor(m.progress * 100)}%`;
 			}
 			setImageInputText(text);
-		},
+		}
 	});
 
 	const readImage = file => {
@@ -40,7 +38,7 @@ const ImageInput = ({ searchObjects }) => {
 				setImageInputText('Error Reading Image');
 			} else {
 				setImageInputText('Scan Accession #');
-			};
+			}
 		};
 	};
 
@@ -109,6 +107,6 @@ const ImageInput = ({ searchObjects }) => {
 };
 
 ImageInput.propTypes = {
-	searchObjects: PropTypes.func,
+	searchObjects: PropTypes.func
 };
 export default ImageInput;

@@ -5,7 +5,7 @@ const SavedObject = ({
 	objectNumber,
 	objectTitle,
 	primaryImageSmall,
-	handleNewActiveObject,
+	handleNewActiveObject
 }) => (
 	<div
 		className="saved-object"
@@ -31,7 +31,7 @@ SavedObject.propTypes = {
 	objectNumber: PropTypes.number,
 	objectTitle: PropTypes.string,
 	primaryImageSmall: PropTypes.string,
-	handleNewActiveObject: PropTypes.func,
+	handleNewActiveObject: PropTypes.func
 };
 
 export default SavedObject;

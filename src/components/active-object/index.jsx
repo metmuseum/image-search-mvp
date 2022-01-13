@@ -110,7 +110,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 ActiveObject.propTypes = {
 	savedObjects: PropTypes.object,
 	object: PropTypes.object,
-	handleSavedObjectChange: PropTypes.func,
+	handleSavedObjectChange: PropTypes.func
 };
 
 export default ActiveObject;
