@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { createWorker } from 'tesseract.js';
 
 const ImageInput = ({ searchObjects }) => {
-	const [imageInputText, setImageInputText] = useState('Scan Accession #');
+	const defaultButtonText = 'Scan Label Text';
+	const [imageInputText, setImageInputText] = useState(defaultButtonText);
 	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
-
 	const worker = createWorker({
 		logger: m => {
 			console.log(m);
@@ -56,7 +56,7 @@ const ImageInput = ({ searchObjects }) => {
 			const searchQuery = findTextToSearchFor(data);
 			if (searchQuery) {
 				let success = true;
-				setImageInputText('Scan Accession #');
+				setImageInputText(defaultButtonText);
 				searchObjects(searchQuery);
 			} else {
 				setImageInputText('Error Reading Image');
