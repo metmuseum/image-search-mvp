@@ -5,7 +5,7 @@ const CollectionItem = ({
 	collectionName,
 	collectionLength,
 	handleSelectCollection,
-	removeCollection,
+	removeCollection
 }) => (
 	<li className="collection-item">
 		<button
@@ -25,7 +25,7 @@ const CollectionItem = ({
 			className="collection-item__button-remove"
 			onClick={() => removeCollection(collectionName)}
 			onKeyDown={e => e.key === 'Enter' && removeCollection(collectionName)}>
-			✖️
+			<span role="img" aria-label="Close Icon">✖️</span>
 		</button>
 	</li>
 );
@@ -34,7 +34,7 @@ CollectionItem.propTypes = {
 	removeCollection: PropTypes.func,
 	handleSelectCollection: PropTypes.func,
 	collectionLength: PropTypes.number,
-	collectionName: PropTypes.string,
+	collectionName: PropTypes.string
 };
 
 export default CollectionItem;
