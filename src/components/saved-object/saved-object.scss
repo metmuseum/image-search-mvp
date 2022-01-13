@@ -1,0 +1,25 @@
+.saved-object{
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+  align-items: center;
+}
+
+.saved-object__image {
+	display: block;
+	width: 100%;
+	height: auto;
+	margin-bottom: 4px;
+}
+
+.saved-object__name {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	font-weight: 400;
+	font-size: $textsize-s;
+	line-height: 1.1;
+	height: 2.2em;
+}

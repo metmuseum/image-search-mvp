@@ -1,0 +1,179 @@
+$bp-small-screen: 850px;
+$sidebar-title-height: 60px;
+@import "~@metmuseum/marble/src/base/base";
+@import "./fonts/font-declarations.scss";
+@import "./components/active-object/active-object";
+@import "./components/saved-object/saved-object";
+@import "./components/collection-item/collection-item";
+@import "./components/image-input/image-input";
+@import "./components/sidebar/sidebar";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	@include typography-body-long();
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	&:visited,
+	&:hover {
+		color: inherit;
+	}
+}
+
+h1, h2, h3, h4 {
+	margin: 0 0 0.5em;
+}
+
+h1 {
+	@include typography-h2();
+	margin: 0;
+}
+
+.button {
+	@include button-base();
+	height: 40px;
+	line-height: 0;
+	min-width: 100px;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 $spacing-xxs;
+}
+
+.button--primary{
+	@include primary-button();
+	@include primary-button--filled();
+}
+
+.button--ghost {
+	@include primary-button();
+	@include primary-button--ghost-dark();
+}
+
+.button--secondary {
+	@include secondary-button();
+	@include secondary-button--ghost-dark();
+}
+
+.button--tertiary {
+	@include tertiary-button();
+	align-self: center;
+}
+
+.object-search-app {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	@media (orientation: landscape) {
+		flex-direction: row;
+	}
+}
+
+.object-search__inputs {
+	align-items: center;
+	display: flex;
+	grid-column-gap: $spacing-micro;
+	margin-bottom: $spacing-xxs;
+}
+
+.main__section {
+	width: 100%;
+}
+
+.main__title-link {
+	cursor: pointer;
+}
+
+.main__title-bar {
+	padding: $spacing-xxs $spacing-component-margin;
+	height: $sidebar-title-height;
+	align-items: center;
+	background-color: $color-white-opaque-90;
+	top: 0;
+	display: flex;
+	flex-wrap: wrap;
+	position: fixed;
+	backdrop-filter: blur(2px);
+	box-shadow: $shadow-passive;
+	left: 0;
+	right: 0;
+	z-index: 99;
+	@media (orientation: landscape) {
+		box-shadow: none;
+		position: relative;
+	}
+}
+
+.main-title {
+	font-size: $textsize-l;
+}
+
+.object-search__section {
+	padding: $spacing-l $spacing-component-margin;
+	position: sticky;
+	top: 0;
+	overflow: scroll;
+	@media (orientation: landscape) {
+		padding-top: $spacing-xxs;
+		position: relative;
+		height: auto;
+		overflow: auto;
+	}
+}
+
+.object-search__input {
+	flex-basis: 100%;
+	padding: $spacing-micro;
+	border-radius: 20px;
+}
+
+.saved-objects__header {
+	@include typography-h3();
+	margin: 0;
+}
+
+.saved-objects__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 16px;
+	row-gap: $spacing-micro;
+	position: sticky;
+	top: 0;
+}
+
+.saved-objects__copy-link {
+	@include button-reset();
+	@include typography-link();
+	align-self: center;
+}
+
+.collections__save-bar {
+	display: flex;
+	grid-column-gap: $spacing-micro;
+	grid-row-gap: $spacing-micro;
+}
+
+.collection-input {
+	flex-shrink: 1;
+	flex-grow: 1;
+	min-width: 0;
+	padding: $spacing-micro;
+	border-radius: 20px;
+	margin-bottom: $spacing-xxs;
+}
+
+.collections__save-button {
+	min-width: 140px;
+}
+
+.collection-items {
+	list-style: none;
+	padding-left: 0;
+}

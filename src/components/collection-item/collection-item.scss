@@ -1,0 +1,26 @@
+.collection-item {
+	margin-bottom: $spacing-micro;
+	white-space: nowrap;
+}
+
+.collection-item__button {
+	@include button-reset();
+	@include typography-link();
+	align-self: center;
+	margin-right: $spacing-micro;
+}
+
+.collection-item__title {
+	margin-right: $spacing-micro;
+}
+
+.collection-item__button-remove {
+	@include button-reset();
+	align-self: center;
+	transition: opacity 0.2s;
+
+	&:hover,
+	&:active {
+		opacity: 0.2;
+	}
+}

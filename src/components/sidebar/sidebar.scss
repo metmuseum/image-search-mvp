@@ -1,0 +1,62 @@
+
+.sidebar {
+	background-color: $color-white;
+	flex-basis: auto;
+	box-shadow: $shadow-active;
+	@media (orientation: landscape) {
+		flex-shrink: 0;
+		flex-basis: 300px;
+		height: 100vh;
+		overflow: scroll;
+		position: sticky;
+		top: 0;
+		z-index: 99;
+	}
+	@media (orientation: landscape) and (min-width: $bp-small-screen) {
+		flex-basis: 450px;
+	}
+}
+
+.sidebar__section {
+	height: calc(100vh - 3*#{$sidebar-title-height});
+	overflow: scroll;
+	background-color: $color-white;
+	padding: $spacing-xxs $spacing-component-margin;
+	@media (orientation: landscape)  {
+		height: calc(100vh - 2*#{$sidebar-title-height});
+		padding: $spacing-xxs;
+	}
+}
+
+.sidebar__title {
+	align-items: center;
+	background-color: $color-white-opaque-90;
+	top: $sidebar-title-height;
+	display: flex;
+	flex-wrap: wrap;
+	grid-column-gap: $spacing-xxs;
+	grid-row-gap: $spacing-xxs;
+	justify-content: space-between;
+	position: sticky;
+	backdrop-filter: blur(2px);
+	padding: 0 $spacing-component-margin;
+	box-shadow: $shadow-passive;
+	min-height: $sidebar-title-height;
+	z-index: 99;
+	@media (orientation: landscape) {
+		padding: 0 $spacing-xxs;
+		top: 0;
+	}
+	&.sidebar__title--collections {
+		top: 2*$sidebar-title-height;
+		@media (orientation: landscape) {
+			top: $sidebar-title-height;
+		}
+	}
+}
+
+.sidebar__title-link {
+	@include button-base();
+	@include tertiary-button();
+	align-self: center;
+}
