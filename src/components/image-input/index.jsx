@@ -4,7 +4,7 @@ import { createWorker } from 'tesseract.js';
 
 const ImageInput = ({ searchObjects }) => {
 	const [imageInputText, setImageInputText] = useState('Scan Accession #');
-	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*$)/i;
+	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
 
 	const worker = createWorker({
 		logger: m => {
@@ -17,6 +17,31 @@ const ImageInput = ({ searchObjects }) => {
 		}
 	});
 
+	const findTextToSearchFor = data => {
+		let accessionNumber = null;
+
+		// If there is a line that is an accession number, return it.
+		data.lines.forEach(line => {
+			const firstChunkOfText = line.text.split(' ')[0].replace(/\n/g, '');
+			if (firstChunkOfText.match(accessionRegex)) {
+				accessionNumber = firstChunkOfText;
+			}
+		});
+
+		//Check for all Words of high confidence.
+		const reducer = (wordArray = [], word) => {
+			if (word.confidence > 85) {
+				return  [...wordArray, word.text]
+			} else {
+				return [...wordArray];
+			}
+		};
+		const stringOfConfidentWords = data.words.reduce(reducer,[]).join(" ");
+
+		//Return an accession Number if one exists, otherwise return all words.
+		return accessionNumber ? accessionNumber : stringOfConfidentWords;
+	};
+
 	const readImage = file => {
 		let success = false;
 		const reader = new FileReader();
@@ -26,18 +51,15 @@ const ImageInput = ({ searchObjects }) => {
 			await worker.loadLanguage('eng');
 			await worker.initialize('eng');
 			const { data } = await worker.recognize(reader.result);
+			console.log(data);
 			await worker.terminate();
-			data.lines.forEach(line => {
-				const firstChunkOfText = line.text.split(' ')[0].replace(/\n/g, '');
-				if (firstChunkOfText.match(accessionRegex)) {
-					searchObjects(firstChunkOfText);
-					success = true;
-				}
-			});
-			if (!success) {
-				setImageInputText('Error Reading Image');
-			} else {
+			const searchQuery = findTextToSearchFor(data);
+			if (searchQuery) {
+				let success = true;
 				setImageInputText('Scan Accession #');
+				searchObjects(searchQuery);
+			} else {
+				setImageInputText('Error Reading Image');
 			}
 		};
 	};
