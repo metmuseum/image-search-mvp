@@ -1,0 +1,16 @@
+@use "~@metmuseum/marble/src/base/base";
+
+.object-search__input {
+	border: 2px solid base.$color-black;
+	border-radius: base.$textsize-s;
+	box-sizing: border-box;
+	color: base.$color-black;
+	font-size: base.$textsize-xs;
+	flex-basis: 100%;
+	padding: base.$spacing-micro;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0px 0px 10px base.$color-grey-500;
+	}
+}

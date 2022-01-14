@@ -1,11 +1,11 @@
-import './app.scss';
 import React, { useState, useEffect } from 'react';
-import { DebounceInput } from 'react-debounce-input';
 import ActiveObject from './components/active-object';
 import SavedObject from './components/saved-object';
 import CollectionItem from './components/collection-item';
 import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
+import SearchInput from "./components/search-input";
+import './app.scss';
 
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
@@ -77,6 +77,10 @@ const App = () => {
 		const newActiveObject = await fetchObjects(objectID);
 		setActiveObject(newActiveObject);
 	};
+
+	const handleSearch = event => {
+		searchObjects(event.target.value);
+	}
 
 	const searchObjects = async query => {
 		if (query !== searchQuery) {
@@ -248,13 +252,9 @@ const App = () => {
 				</div>
 				<div className="object-search__section">
 					<div className="object-search__inputs">
-						<DebounceInput
-							className="object-search__input"
-							key="objectSearchBar"
-							placeholder="Search Objects"
-							debounceTimeout={200}
+						<SearchInput
 							value={searchQuery}
-							onChange={event => searchObjects(event.target.value)}
+							onChange={handleSearch}
 						/>
 						<span>or</span>
 						<ImageInput searchObjects={searchObjects} />
