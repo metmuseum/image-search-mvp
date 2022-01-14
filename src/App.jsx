@@ -7,7 +7,6 @@ import CollectionItem from './components/collection-item';
 import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 
-// Test change
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
 
@@ -261,12 +260,14 @@ const App = () => {
 						<ImageInput searchObjects={searchObjects} />
 					</div>
 					{errorMessage ?
-						<div>{errorMessage}</div>
-						: <ActiveObject
+						<div>
+							{errorMessage}
+						</div> :
+						<ActiveObject
 							savedObjects={savedObjects}
 							object={activeObject}
 							handleSavedObjectChange={handleSavedObjectChange}
-						  />
+						/>
 					}
 				</div>
 			</main>
@@ -320,9 +321,7 @@ const App = () => {
 									objectNumber={savedObject}
 									handleNewActiveObject={handleNewActiveObject}
 									objectTitle={savedObjects[savedObject].title}
-									primaryImageSmall={
-										savedObjects[savedObject].primaryImageSmall
-									}
+									primaryImageSmall={savedObjects[savedObject].primaryImageSmall}
 								/>
 							);
 						})}
@@ -359,10 +358,7 @@ const App = () => {
 											key={collection}
 											removeCollection={removeCollection}
 											handleSelectCollection={handleSelectCollection}
-											collectionLength={
-												Object.keys(collections[collection].collectionObjects)
-													.length
-											}
+											collectionLength={Object.keys(collections[collection].collectionObjects).length}
 											collectionName={collection}
 										/>
 									);
