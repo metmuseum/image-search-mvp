@@ -114,6 +114,18 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					<span className="active-object__value">{object.accessionYear}</span>
 				</div>
 			</div>
+
+			<div className="active-object__info">
+				<span className="active-object__key">
+					<a
+						target="_blank"
+						className="active-object__link"
+						href={object.primaryImage}>
+						Save high resolution image
+					</a>
+				</span>
+			</div>
+
 		</div>
 	</div>
 );
