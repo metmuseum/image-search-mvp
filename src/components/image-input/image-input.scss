@@ -2,9 +2,13 @@
 	flex-shrink: 0;
 }
 .image-input__input {
-    display: none;
+	display: none;
 }
 
 .image-inpute__image {
 	display: none;
+}
+
+.image-input__label.button {
+	min-width: 140px;
 }
