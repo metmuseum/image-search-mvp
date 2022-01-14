@@ -21,7 +21,10 @@ const App = () => {
 
 	const [sharableURL, setSharableURL] = useState();
 	const [sharableURLCurrent, setSharableURLCurrent] = useState(false);
+
 	const [searchQuery, setSearchQuery] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
 	const [activeCollectionName, setActiveCollectionName] = useState('');
 	const [editingExistingCollection, setEditingExistingCollection] = useState(false);
 	const [collections, setCollections] = useState(
@@ -47,10 +50,12 @@ const App = () => {
 	};
 
 	const fetchObjects = async objectID => {
-		const request = await fetch(`${objectAPI}${objectID}`);
-		const response = request.json();
-		return response;
-		// TODO Error handling
+		const objects = await fetch(`${objectAPI}${objectID}`)
+			.then(response => response.json())
+			.catch(err => {
+				console.warn(`Couldn't hit API`);
+			});
+		return objects || null;
 	};
 
 	const fetchAndSave = async objectID => {
@@ -81,8 +86,13 @@ const App = () => {
 		const request = await fetch(`${searchAPI}${query}`);
 		const response = await request.json();
 		if (response.objectIDs) {
+			setErrorMessage(null);
 			const newObject = response.objectIDs[0];
 			handleNewActiveObject(newObject);
+		} else if (query.length > 0) {
+			setErrorMessage("No objects on view match your query");
+		} else {
+			setErrorMessage(null);
 		}
 	};
 
@@ -250,11 +260,14 @@ const App = () => {
 						<span>or</span>
 						<ImageInput searchObjects={searchObjects} />
 					</div>
-					<ActiveObject
-						savedObjects={savedObjects}
-						object={activeObject}
-						handleSavedObjectChange={handleSavedObjectChange}
-					/>
+					{errorMessage ?
+						<div>{errorMessage}</div>
+						: <ActiveObject
+							savedObjects={savedObjects}
+							object={activeObject}
+							handleSavedObjectChange={handleSavedObjectChange}
+						  />
+					}
 				</div>
 			</main>
 			<section className="sidebar">
