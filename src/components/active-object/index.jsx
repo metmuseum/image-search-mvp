@@ -10,7 +10,13 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 						className="active-object__header"
 						dangerouslySetInnerHTML={{ __html: object.title }}
 					/>
-					<h2 className="active-object__artist">{object.artistDisplayName}</h2>
+					<h2 className="active-object__artist">{object.artistDisplayName}
+						{object.artistDisplayBio && (
+							<span className="active-object__display-bio">
+								({object.artistDisplayBio})
+							</span>
+						)}
+					</h2>
 				</div>
 				<div className="active-object__buttons">
 					{savedObjects[object.objectID] ? (
@@ -89,6 +95,16 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					</div>
 				)}
 				<div className="active-object__info">
+					<span className="active-object__key">Department: </span>
+					<span className="active-object__value">{object.department}</span>
+				</div>
+
+				<div className="active-object__info">
+					<span className="active-object__key">Medium: </span>
+					<span className="active-object__value">{object.medium}</span>
+				</div>
+
+				<div className="active-object__info">
 					<span className="active-object__key">Accession Number: </span>
 					<span className="active-object__value">{object.accessionNumber}</span>
 				</div>
@@ -96,11 +112,6 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				<div className="active-object__info">
 					<span className="active-object__key">Accession Year: </span>
 					<span className="active-object__value">{object.accessionYear}</span>
-				</div>
-
-				<div className="active-object__info">
-					<span className="active-object__key">Department: </span>
-					<span className="active-object__value">{object.department}</span>
 				</div>
 			</div>
 		</div>

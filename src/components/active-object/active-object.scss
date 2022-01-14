@@ -10,6 +10,7 @@
 	flex-basis: 300px;
 	flex-shrink: 0;
 	flex-grow: 1;
+	margin-bottom: $spacing-xxs;
 }
 
 .active-object__image {
@@ -29,6 +30,12 @@
 	@include typography-h4();
 	font-weight: 400;
 	font-size: $textsize-s;
+	margin-bottom: 0;
+}
+
+.active-object__display-bio {
+	color: $color-grey-700;
+	margin-left: $spacing-micro;
 }
 
 .active-object__artist-role {
@@ -42,16 +49,16 @@
 
 .active-object__buttons {
 	display: flex;
-	grid-column-gap: $spacing-xxs;
-	grid-row-gap: $spacing-xxs;
+	grid-column-gap: $spacing-xs;
+	grid-row-gap: $spacing-xs;
 }
 
 .active-object__image-container {
 	margin-left: -$spacing-component-margin;
 	margin-right: -$spacing-component-margin;
 	overflow: auto;
-	margin-bottom: $spacing-xxs;
-	padding-bottom: $spacing-xxs;
+	margin-bottom: $spacing-micro;
+	padding-bottom: $spacing-micro;
 }
 
 .active-object__images {
