@@ -2,11 +2,11 @@
 
 .object-search__input {
 	border: 2px solid base.$color-black;
-	border-radius: base.$textsize-s;
+	border-radius: 50px;
 	box-sizing: border-box;
 	color: base.$color-black;
-	font-size: base.$textsize-xs;
 	flex-basis: 100%;
+	min-width: 0;
 	padding: base.$spacing-micro;
 
 	&:focus {
