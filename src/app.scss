@@ -1,6 +1,6 @@
 $bp-small-screen: 950px;
 $sidebar-title-height: 60px;
-@import "~@metmuseum/marble/src/base/base";
+@use "~@metmuseum/marble/src/base/base";
 @import "./fonts/font-declarations.scss";
 @import "./components/active-object/active-object";
 @import "./components/saved-object/saved-object";
@@ -14,6 +14,8 @@ $sidebar-title-height: 60px;
 
 body {
 	@include typography-body-long();
+	-webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 	padding: 0;
 	margin: 0;
 }
@@ -128,11 +130,7 @@ h1 {
 	}
 }
 
-.object-search__input {
-	flex-basis: 100%;
-	padding: $spacing-micro;
-	border-radius: 20px;
-}
+
 
 .saved-objects__header {
 	@include typography-h3();

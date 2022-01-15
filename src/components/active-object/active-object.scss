@@ -1,3 +1,6 @@
+// @use "~@metmuseum/marble/src/base/sizes" as sizes;
+@import "~@metmuseum/marble/src/base/base";
+
 .active-object__title-box {
 	align-items: baseline;
 	display: flex;

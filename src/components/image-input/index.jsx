@@ -43,7 +43,6 @@ const ImageInput = ({ searchObjects }) => {
 	};
 
 	const readImage = file => {
-		let success = false;
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = async () => {
@@ -55,7 +54,6 @@ const ImageInput = ({ searchObjects }) => {
 			await worker.terminate();
 			const searchQuery = findTextToSearchFor(data);
 			if (searchQuery) {
-				let success = true;
 				setImageInputText(defaultButtonText);
 				searchObjects(searchQuery);
 			} else {
