@@ -28,7 +28,7 @@ const SavedObject = ({
 );
 
 SavedObject.propTypes = {
-	objectNumber: PropTypes.number,
+	objectNumber: PropTypes.string,
 	objectTitle: PropTypes.string,
 	primaryImageSmall: PropTypes.string,
 	handleNewActiveObject: PropTypes.func
