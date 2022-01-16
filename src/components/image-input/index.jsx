@@ -5,8 +5,7 @@ import { createWorker } from 'tesseract.js';
 const ImageInput = ({ searchObjects }) => {
 	const defaultButtonText = 'Scan Label Text';
 	const [imageInputText, setImageInputText] = useState(defaultButtonText);
-	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
-	const worker = createWorker({
+	const [worker] = useState(createWorker({
 		logger: m => {
 			console.log(m);
 			let text = 'Processing...';
@@ -15,7 +14,9 @@ const ImageInput = ({ searchObjects }) => {
 			}
 			setImageInputText(text);
 		}
-	});
+	}));
+
+	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
 
 	const findTextToSearchFor = data => {
 		let accessionNumber = null;
@@ -51,7 +52,6 @@ const ImageInput = ({ searchObjects }) => {
 			await worker.initialize('eng');
 			const { data } = await worker.recognize(reader.result);
 			console.log(data);
-			await worker.terminate();
 			const searchQuery = findTextToSearchFor(data);
 			if (searchQuery) {
 				setImageInputText(defaultButtonText);
