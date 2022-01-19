@@ -5,7 +5,7 @@ import CollectionItem from './components/collection-item';
 import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
-import NotificationBanner from "./components/notification-banner";
+import OfflineNotification from "./components/offline-notification";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
@@ -18,28 +18,6 @@ const App = () => {
 	const objectsGridRef = React.createRef();
 	const collectionsRef = React.createRef();
 	const objectSearchRef = React.createRef();
-
-	const [isOnline, setIsOnline] = useState(navigator.onLine);
-	const setOnline = () => {
-		console.log('We are online!');
-		setIsOnline(true);
-	};
-	const setOffline = () => {
-		console.log('We are offline!');
-		setIsOnline(false);
-	};
-
-	// Register the event listeners
-	useEffect(() => {
-		window.addEventListener('offline', setOffline);
-		window.addEventListener('online', setOnline);
-
-		// cleanup if we unmount
-		return () => {
-			window.removeEventListener('offline', setOffline);
-			window.removeEventListener('online', setOnline);
-		}
-	}, []);
 
 	const [sharableURL, setSharableURL] = useState();
 	const [sharableURLCurrent, setSharableURLCurrent] = useState(false);
@@ -261,143 +239,136 @@ const App = () => {
 	}, [collections]);
 
 	return (
-		<div>
-			{!isOnline && <div className="offline-notification"><NotificationBanner
-				backgroundColor="beige"
-				header="Your are currently offline"
-				description="Can't access the internet. Don't worry, you can still see your collection."
-			                                                    /></div>}
-			<div className="object-search-app">
-				<main className="main__section" ref={objectSearchRef}>
-					<div className="main__title-bar">
+		<div className="object-search-app">
+			<main className="main__section" ref={objectSearchRef}>
+				<div className="main__title-bar">
+					<a
+						tabIndex="0"
+						className="main__title-link"
+						onClick={() => scrollToRef(objectSearchRef)}
+						onKeyDown={e => e.key === 'Enter' && scrollToRef(objectSearchRef)}
+						role="button">
+						<h1 className="main-title">Object Look Up</h1>
+					</a>
+				</div>
+				<div className="object-search__section">
+					<div className="object-search__inputs">
+						<SearchInput
+							value={searchQuery}
+							onChange={handleSearch}
+						/>
+						<span>or</span>
+						<ImageInput searchObjects={searchObjects} />
+					</div>
+					{errorMessage ?
+						<div>
+							{errorMessage}
+						</div> :
+						<ActiveObject
+							savedObjects={savedObjects}
+							object={activeObject}
+							handleSavedObjectChange={handleSavedObjectChange}
+						/>
+					}
+				</div>
+			</main>
+			<section className="sidebar">
+				<div className="sidebar__title">
+					<h1 className="saved-objects__header">
 						<a
 							tabIndex="0"
-							className="main__title-link"
-							onClick={() => scrollToRef(objectSearchRef)}
-							onKeyDown={e => e.key === 'Enter' && scrollToRef(objectSearchRef)}
+							className="sidebar__title-link"
+							onClick={() => scrollToRef(objectsGridRef)}
+							onKeyDown={e => e.key === 'Enter' && scrollToRef(objectsGridRef)}
 							role="button">
-							<h1 className="main-title">Object Look Up</h1>
+							Saved Objects
 						</a>
+					</h1>
+					{Object.keys(savedObjects).length !== 0 && (
+						<button
+							type="button"
+							className="saved-objects__copy-link"
+							onKeyDown={e => e.key === 'Enter' && clearSavedObjects}
+							onClick={clearSavedObjects}>
+							Clear Objects
+						</button>
+					)}
+				</div>
+				<div className="sidebar__section">
+					<div className="collections__save-bar">
+						<input
+							className="collection-input"
+							key="activeCollectionNameBar"
+							placeholder="Collection Name"
+							value={activeCollectionName}
+							onKeyDown={e => e.key === 'Enter' && createCollection()}
+							onChange={event => setActiveCollectionName(event.target.value)}
+						/>
+						<button
+							type="button"
+							className="button button--secondary collections__save-button"
+							onClick={() => createCollection()}
+							onKeyDown={e => e.key === 'Enter' && createCollection()}>
+							{editingExistingCollection
+								? 'Update Collection'
+								: 'Save Collection'}
+						</button>
 					</div>
-					<div className="object-search__section">
-						<div className="object-search__inputs">
-							<SearchInput
-								value={searchQuery}
-								onChange={handleSearch}
-							/>
-							<span>or</span>
-							<ImageInput searchObjects={searchObjects} />
-						</div>
-						{errorMessage ?
-							<div>
-								{errorMessage}
-							</div> :
-							<ActiveObject
-								savedObjects={savedObjects}
-								object={activeObject}
-								handleSavedObjectChange={handleSavedObjectChange}
-							/>
-						}
+					<div className="saved-objects__grid" ref={objectsGridRef}>
+						{Object.keys(savedObjects).map(savedObject => {
+							return (
+								<SavedObject
+									key={savedObject}
+									objectNumber={savedObject}
+									handleNewActiveObject={handleNewActiveObject}
+									objectTitle={savedObjects[savedObject].title}
+									primaryImageSmall={savedObjects[savedObject].primaryImageSmall}
+								/>
+							);
+						})}
 					</div>
-				</main>
-				<section className="sidebar">
-					<div className="sidebar__title">
-						<h1 className="saved-objects__header">
-							<a
-								tabIndex="0"
-								className="sidebar__title-link"
-								onClick={() => scrollToRef(objectsGridRef)}
-								onKeyDown={e => e.key === 'Enter' && scrollToRef(objectsGridRef)}
-								role="button">
-								Saved Objects
-							</a>
-						</h1>
-						{Object.keys(savedObjects).length !== 0 && (
-							<button
-								type="button"
-								className="saved-objects__copy-link"
-								onKeyDown={e => e.key === 'Enter' && clearSavedObjects}
-								onClick={clearSavedObjects}>
-								Clear Objects
-							</button>
-						)}
-					</div>
-					<div className="sidebar__section">
-						<div className="collections__save-bar">
-							<input
-								className="collection-input"
-								key="activeCollectionNameBar"
-								placeholder="Collection Name"
-								value={activeCollectionName}
-								onKeyDown={e => e.key === 'Enter' && createCollection()}
-								onChange={event => setActiveCollectionName(event.target.value)}
-							/>
-							<button
-								type="button"
-								className="button button--secondary collections__save-button"
-								onClick={() => createCollection()}
-								onKeyDown={e => e.key === 'Enter' && createCollection()}>
-								{editingExistingCollection
-									? 'Update Collection'
-									: 'Save Collection'}
-							</button>
-						</div>
-						<div className="saved-objects__grid" ref={objectsGridRef}>
-							{Object.keys(savedObjects).map(savedObject => {
-								return (
-									<SavedObject
-										key={savedObject}
-										objectNumber={savedObject}
-										handleNewActiveObject={handleNewActiveObject}
-										objectTitle={savedObjects[savedObject].title}
-										primaryImageSmall={savedObjects[savedObject].primaryImageSmall}
-									/>
-								);
-							})}
-						</div>
-					</div>
-					<div className="sidebar__title sidebar__title--collections">
-						<h1 className="saved-objects__header">
-							<a
-								tabIndex="0"
-								className="sidebar__title-link"
-								onClick={() => scrollToRef(collectionsRef)}
-								onKeyDown={e => e.key === 'Enter' && scrollToRef(collectionsRef)}
-								role="button">
-								Collections
-							</a>
-						</h1>
-						{sharableURL && (
-							<button
-								type="button"
-								className="saved-objects__copy-link"
-								onKeyDown={e => e.key === 'Enter' && copyURLtoClipboard}
-								onClick={copyURLtoClipboard}>
-								{sharableURLCurrent ? 'Copied!' : 'Copy Collection Link'}
-							</button>
-						)}
-					</div>
-					<div className="sidebar__section">
-						<div ref={collectionsRef}>
-							<div>
-								<ul className="collection-items">
-									{Object.keys(collections).map(collection => {
-										return (
-											<CollectionItem
-												key={collection}
-												removeCollection={removeCollection}
-												handleSelectCollection={handleSelectCollection}
-												collectionLength={Object.keys(collections[collection].collectionObjects).length}
-												collectionName={collection}
-											/>
-										);
-									})}
-								</ul>
-							</div>
+				</div>
+				<div className="sidebar__title sidebar__title--collections">
+					<h1 className="saved-objects__header">
+						<a
+							tabIndex="0"
+							className="sidebar__title-link"
+							onClick={() => scrollToRef(collectionsRef)}
+							onKeyDown={e => e.key === 'Enter' && scrollToRef(collectionsRef)}
+							role="button">
+							Collections
+						</a>
+					</h1>
+					{sharableURL && (
+						<button
+							type="button"
+							className="saved-objects__copy-link"
+							onKeyDown={e => e.key === 'Enter' && copyURLtoClipboard}
+							onClick={copyURLtoClipboard}>
+							{sharableURLCurrent ? 'Copied!' : 'Copy Collection Link'}
+						</button>
+					)}
+				</div>
+				<div className="sidebar__section">
+					<div ref={collectionsRef}>
+						<div>
+							<ul className="collection-items">
+								{Object.keys(collections).map(collection => {
+									return (
+										<CollectionItem
+											key={collection}
+											removeCollection={removeCollection}
+											handleSelectCollection={handleSelectCollection}
+											collectionLength={Object.keys(collections[collection].collectionObjects).length}
+											collectionName={collection}
+										/>
+									);
+								})}
+							</ul>
 						</div>
 					</div>
-				</section>
-			</div>
+				</div>
+			</section>
 		</div>
 	);
 };

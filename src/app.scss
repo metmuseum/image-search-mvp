@@ -1,6 +1,5 @@
-$bp-small-screen: 950px;
-$sidebar-title-height: 60px;
 @use "~@metmuseum/marble/src/base/base";
+@use "variables.scss" as vars;
 @import "./fonts/font-declarations.scss";
 @import "./components/active-object/active-object";
 @import "./components/saved-object/saved-object";
@@ -95,7 +94,7 @@ h1 {
 
 .main__title-bar {
 	padding: $spacing-xxs $spacing-component-margin;
-	height: $sidebar-title-height;
+	height: vars.$sidebar-title-height;
 	align-items: center;
 	background-color: $color-white-opaque-90;
 	top: 0;
@@ -176,8 +175,3 @@ h1 {
 	padding-left: 0;
 }
 
-.offline-notification {
-	@media (orientation: portrait) {
-		margin-top: $sidebar-title-height;
-	}
-}

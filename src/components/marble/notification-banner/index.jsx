@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import "@metmuseum/marble/src/components/notification-banner/notification-banner.scss"; // 😬
 
 const NotificationBanner = ({
+	mode="productive",
 	backgroundColor="#fff",
 	header="",
 	textColor="#333",
 	description,
-	link={}
+	link={
+		text: "",
+		url: ""
+	}
 }) => {
 	return (<section
-		className={`notification-banner`}
+		className={`notification-banner notification-banner--${mode}`}
 		style={{color: textColor, backgroundColor}}>
 		<h2 className="notification-banner__header">{header}</h2>
 		<div className="notification-banner__body">
