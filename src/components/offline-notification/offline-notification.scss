@@ -2,8 +2,7 @@
 @use "~@metmuseum/marble/src/base/base";
 
 .offline-notification {
-  margin: base.$spacing-s;
 	@media (orientation: portrait) {
-		margin-top: calc(vars.$sidebar-title-height + base.$spacing-s);
+		margin-top: vars.$sidebar-title-height;
 	}
 }
