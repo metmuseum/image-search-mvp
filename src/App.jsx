@@ -241,6 +241,7 @@ const App = () => {
 	return (
 		<div className="object-search-app">
 			<main className="main__section" ref={objectSearchRef}>
+				<OfflineNotification />
 				<div className="main__title-bar">
 					<a
 						tabIndex="0"

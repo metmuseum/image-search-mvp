@@ -30,9 +30,10 @@ export default () => {
 	} else {
 		return (<div className="offline-notification">
 			<NotificationBanner
-				backgroundColor="beige"
+				mode=""
+				backgroundColor="#FFD7C7"
 				header="Your are currently offline"
-				description="Can't access the internet. Don't worry, you can still see your collection."
+				description="The app can't access the internet right now. Don't worry, you can still see your saved collections."
 			/>
 		</div>)
 
