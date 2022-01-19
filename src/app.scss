@@ -175,3 +175,9 @@ h1 {
 	list-style: none;
 	padding-left: 0;
 }
+
+.offline-notification {
+	@media (orientation: portrait) {
+		margin-top: $sidebar-title-height;
+	}
+}
