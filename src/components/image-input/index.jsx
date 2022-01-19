@@ -18,6 +18,8 @@ const ImageInput = ({ searchObjects }) => {
 
 	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
 
+	
+
 	const findTextToSearchFor = data => {
 		let accessionNumber = null;
 
@@ -29,18 +31,12 @@ const ImageInput = ({ searchObjects }) => {
 			}
 		});
 
-		//Check for all Words of high confidence.
-		const reducer = (wordArray = [], word) => {
-			if (word.confidence > 85) {
-				return  [...wordArray, word.text]
-			} else {
-				return [...wordArray];
-			}
-		};
-		const stringOfConfidentWords = data.words.reduce(reducer,[]).join(" ");
-
-		//Return an accession Number if one exists, otherwise return all words.
-		return accessionNumber ? accessionNumber : stringOfConfidentWords;
+		//Return an accession Number if one exists, otherwise return all confident words.
+		return accessionNumber ? accessionNumber :
+			data.words
+				.filter(({confidence}) => confidence > 85)
+				.map(({text})=> text )
+				.join(" ");
 	};
 
 	const readImage = file => {
