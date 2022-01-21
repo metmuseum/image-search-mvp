@@ -37,11 +37,9 @@ const App = () => {
 	);
 
 	const setURL = () => {
-		if (Object.keys(savedObjects).length > 0) {
-			const savedObjectsParam = encodeURIComponent(
-				JSON.stringify(Object.keys(savedObjects))
-			);
-			params.set('o', savedObjectsParam);
+		const ids = Object.keys(savedObjects).join(",")
+		if (ids.length) {
+			params.set('o', encodeURIComponent(ids));
 			setSharableURL(`${url.origin}?${params}`);
 		} else {
 			setSharableURL(null);
@@ -187,13 +185,12 @@ const App = () => {
 	};
 
 	const handleDataFromURL = objectsFromURL => {
-		if (Object.keys(savedObjects).length !== 0) {
+		if (Object.keys(savedObjects).length) {
 			saveCollectionToNewName();
 			clearSavedObjects();
 		}
-		const arrayOfSavedObjectsFromURL = JSON.parse(
-			decodeURIComponent(objectsFromURL)
-		);
+		const arrayOfSavedObjectsFromURL = decodeURIComponent(objectsFromURL).split(",")
+
 		arrayOfSavedObjectsFromURL.forEach(objectID => {
 			fetchAndSave(objectID);
 		});
