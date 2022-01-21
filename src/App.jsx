@@ -60,14 +60,9 @@ const App = () => {
 
 	const fetchAndSave = async objectID => {
 		const newObject = await fetchObjects(objectID);
-		const newObjectReduced = (({ title, primaryImageSmall }) => ({
-			title,
-			primaryImageSmall
-		}))(newObject);
-
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
-
-		storedSavedObjects[newObject.objectID] = newObjectReduced;
+		let { title, primaryImageSmall } = newObject;
+		storedSavedObjects[newObject.objectID] = { title, primaryImageSmall };
 		setSavedObjects(storedSavedObjects);
 	};
 
