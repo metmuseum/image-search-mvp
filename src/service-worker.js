@@ -14,6 +14,8 @@ import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
+// app-specific imports
+import { fetchObjects } from "./helpers/api";
 
 
 
@@ -112,3 +114,9 @@ self.addEventListener('message', event => {
 });
 
 // Any other custom service worker logic can go here.
+const ensureSavedObjectsCache = () => {
+	const savedObjects = JSON.parse(localStorage.getItem('savedObjects')) || {};
+	console.log("running ensureSavedObjectsCache for:", savedObjects)
+	Object.keys(savedObjects).forEach(id => fetchObjects(id))
+}
+ensureSavedObjectsCache();

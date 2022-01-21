@@ -6,13 +6,11 @@ import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
 import OfflineNotification from "./components/offline-notification";
+import { searchAPI, fetchObjects } from "./helpers/api";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
-
-const searchAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/search?isOnView=true?q=';
-const objectAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
 const App = () => {
 	const objectsGridRef = React.createRef();
@@ -49,14 +47,6 @@ const App = () => {
 		}
 	};
 
-	const fetchObjects = async objectID => {
-		const objects = await fetch(`${objectAPI}${objectID}`)
-			.then(response => response.json())
-			.catch(err => {
-				console.error(`Couldn't hit API`, err);
-			});
-		return objects || null;
-	};
 
 	const fetchAndSave = async objectID => {
 		const newObject = await fetchObjects(objectID);
