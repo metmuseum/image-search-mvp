@@ -34,7 +34,7 @@ const App = () => {
 		JSON.parse(localStorage.getItem('savedObjects')) || {}
 	);
 	const [activeObject, setActiveObject] = useState(
-		Object.keys(savedObjects).length === 0 && defaultObject
+		Object.keys(savedObjects).length ? savedObjects[Object.keys(savedObjects)[0]] : defaultObject
 	);
 
 	const setURL = () => {

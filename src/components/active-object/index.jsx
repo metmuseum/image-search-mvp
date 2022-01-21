@@ -123,7 +123,8 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					<a
 						target="_blank"
 						className="active-object__link"
-						href={object.primaryImage}>
+						href={object.primaryImage}
+						rel="noreferrer">
 						View High Resolution Image
 					</a>
 				</span>
