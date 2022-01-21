@@ -70,6 +70,22 @@ registerRoute(
 	})
 );
 
+registerRoute(
+	// TODO: this should not be hardcoded but per-environment config, but is there even a staging for api?
+	({ url }) => url.hostname.toLowerCase() === 'collectionapi.metmuseum.org', // Customize this strategy as needed, e.g., by changing to CacheFirst.
+	new CacheFirst({
+		cacheName: 'apiResponses',
+	})
+);
+
+
+registerRoute(
+	({ url }) => url.toLowerCase().includes('unpkg.com/tesseract'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+	new CacheFirst({
+		cacheName: 'tesseract',
+	})
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', event => {
