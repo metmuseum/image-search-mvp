@@ -72,16 +72,16 @@ registerRoute(
 
 registerRoute(
 	// TODO: this should not be hardcoded but per-environment config, but is there even a staging for api?
-	({ url }) => url.hostname.toLowerCase() === 'collectionapi.metmuseum.org', // Customize this strategy as needed, e.g., by changing to CacheFirst.
-	new CacheFirst({
+	({ url }) => url.hostname.toLowerCase() === 'collectionapi.metmuseum.org',
+	new StaleWhileRevalidate({
 		cacheName: 'apiResponses',
 	})
 );
 
 
 registerRoute(
-	({ url }) => url.toLowerCase().includes('unpkg.com/tesseract'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-	new CacheFirst({
+	({ url }) => url.toLowerCase().includes('unpkg.com/tesseract'),
+	new StaleWhileRevalidate({
 		cacheName: 'tesseract',
 	})
 );
