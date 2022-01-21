@@ -53,7 +53,7 @@ const App = () => {
 		const objects = await fetch(`${objectAPI}${objectID}`)
 			.then(response => response.json())
 			.catch(err => {
-				console.warn(`Couldn't hit API`);
+				console.error(`Couldn't hit API`, err);
 			});
 		return objects || null;
 	};
