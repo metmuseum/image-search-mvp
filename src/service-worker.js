@@ -68,7 +68,7 @@ registerRoute(
 		console.log("url is:", url, url.hostname)
 		return url.hostname.toLowerCase() === 'images.metmuseum.org'
 	}, // Customize this strategy as needed, e.g., by changing to CacheFirst.
-	new CacheFirst({
+	new StaleWhileRevalidate({
 		cacheName: 'collectionImages',
 	})
 );
