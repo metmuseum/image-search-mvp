@@ -12,6 +12,10 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+
+
+
 
 clientsClaim();
 
@@ -70,6 +74,11 @@ registerRoute(
 	}, // Customize this strategy as needed, e.g., by changing to CacheFirst.
 	new StaleWhileRevalidate({
 		cacheName: 'collectionImages',
+		plugins: [
+			new CacheableResponsePlugin({
+				statuses: [0, 200]
+			})
+		]
 	})
 );
 
@@ -78,6 +87,11 @@ registerRoute(
 	({ url }) => url.hostname.toLowerCase() === 'collectionapi.metmuseum.org',
 	new StaleWhileRevalidate({
 		cacheName: 'apiResponses',
+		plugins: [
+			new CacheableResponsePlugin({
+				statuses: [0, 200]
+			})
+		]
 	})
 );
 
