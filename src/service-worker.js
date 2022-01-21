@@ -80,7 +80,7 @@ registerRoute(
 
 
 registerRoute(
-	({ url }) => url.toLowerCase().includes('unpkg.com/tesseract'),
+	({ url }) => url.toString().toLowerCase().includes('unpkg.com/tesseract'),
 	new StaleWhileRevalidate({
 		cacheName: 'tesseract',
 	})
