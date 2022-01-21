@@ -29,6 +29,11 @@ const NotificationBanner = ({
 NotificationBanner.propTypes = {
 	backgroundColor: PropTypes.string,
 	textColor: PropTypes.string,
+	mode: PropTypes.string,
+	header: PropTypes.string,
+	description: PropTypes.string,
+	link: PropTypes.object,
+	children: PropTypes.array
 	// link: PropTypes.shape,// url, text, handleOnClick
 	// header,
 	// textColor

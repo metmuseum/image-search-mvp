@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NotificationBanner from "../marble/notification-banner";
 import "./offline-notification.scss";
 
-export default () => {
+const OfflineNotification = () => {
 	const [isOnline, setIsOnline] = useState(navigator.onLine);
 	const [gotIt, setGotIt] = useState(false);
 
@@ -48,3 +48,5 @@ export default () => {
 		</div>)
 	}
 }
+
+export default OfflineNotification
