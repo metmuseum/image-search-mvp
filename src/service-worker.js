@@ -11,7 +11,7 @@ import { clientsClaim } from 'workbox-core';
 // import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 
@@ -75,7 +75,7 @@ registerRoute(
 	new StaleWhileRevalidate({
 		cacheName: 'collectionImages',
 		plugins: [
-			new CacheableResponsePlugin({
+			new CacheFirst({
 				statuses: [0, 200]
 			})
 		]
@@ -85,7 +85,7 @@ registerRoute(
 registerRoute(
 	// TODO: this should not be hardcoded but per-environment config, but is there even a staging for api?
 	({ url }) => url.hostname.toLowerCase() === 'collectionapi.metmuseum.org',
-	new StaleWhileRevalidate({
+	new CacheFirst({
 		cacheName: 'apiResponses',
 		plugins: [
 			new CacheableResponsePlugin({
@@ -98,7 +98,7 @@ registerRoute(
 
 registerRoute(
 	({ url }) => url.toString().toLowerCase().includes('unpkg.com/tesseract'),
-	new StaleWhileRevalidate({
+	new CacheFirst({
 		cacheName: 'tesseract',
 	})
 );
