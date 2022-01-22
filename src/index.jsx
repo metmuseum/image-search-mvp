@@ -15,14 +15,7 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.register({
-	onSuccess: registration => {
-		console.log("registration is:", registration)
-		const savedObjects = JSON.parse(localStorage.getItem('savedObjects')) || {};
-		console.log("running ensureSavedObjectsCache for:", savedObjects)
-		Object.keys(savedObjects).forEach(id => fetchObjects(id))
-	}
-});
+serviceWorkerRegistration.register();
 
 
 // If you want to start measuring performance in your app, pass a function
