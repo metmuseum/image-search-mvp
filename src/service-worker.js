@@ -66,7 +66,7 @@ registerRoute(
 registerRoute(
 	// TODO: this should not be hardcoded but per-environment config, but is there even a staging for images?
 	({ url }) => {
-		console.log("url is:", url, url.hostname)
+		// console.log("url is:", url, url.hostname)
 		return url.hostname.toLowerCase() === 'images.metmuseum.org'
 	}, // Customize this strategy as needed, e.g., by changing to CacheFirst.
 	new StaleWhileRevalidate({
