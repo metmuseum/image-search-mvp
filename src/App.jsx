@@ -5,6 +5,7 @@ import CollectionItem from './components/collection-item';
 import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
+import Hashids from "hashids";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
@@ -12,6 +13,8 @@ const params = new URLSearchParams(url.search.slice(1));
 
 const searchAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/search?isOnView=true?q=';
 const objectAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+
+const hashids = new Hashids()
 
 const App = () => {
 	const objectsGridRef = React.createRef();
@@ -37,9 +40,11 @@ const App = () => {
 	);
 
 	const setURL = () => {
-		const ids = Object.keys(savedObjects).join(",")
+		const ids = Object.keys(savedObjects)
+			.map(id => hashids.encode(id))
+			.join("_")
 		if (ids.length) {
-			params.set('o', encodeURIComponent(ids));
+			params.set('o', ids);
 			setSharableURL(`${url.origin}?${params}`);
 		} else {
 			setSharableURL(null);
@@ -189,7 +194,7 @@ const App = () => {
 			saveCollectionToNewName();
 			clearSavedObjects();
 		}
-		const arrayOfSavedObjectsFromURL = decodeURIComponent(objectsFromURL).split(",")
+		const arrayOfSavedObjectsFromURL = objectsFromURL.split("_").map(id => hashids.decode(id))
 
 		arrayOfSavedObjectsFromURL.forEach(objectID => {
 			fetchAndSave(objectID);
