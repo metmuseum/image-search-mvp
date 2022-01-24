@@ -7,10 +7,13 @@ import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
 import OfflineNotification from "./components/offline-notification";
 import { searchAPI, fetchObjects } from "./helpers/api";
+import Hashids from "hashids";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
+
+const hashids = new Hashids()
 
 const App = () => {
 	const objectsGridRef = React.createRef();
@@ -36,11 +39,11 @@ const App = () => {
 	);
 
 	const setURL = () => {
-		if (Object.keys(savedObjects).length > 0) {
-			const savedObjectsParam = encodeURIComponent(
-				JSON.stringify(Object.keys(savedObjects))
-			);
-			params.set('o', savedObjectsParam);
+		const ids = Object.keys(savedObjects)
+			.map(id => hashids.encode(id))
+			.join("_")
+		if (ids.length) {
+			params.set('o', ids);
 			setSharableURL(`${url.origin}?${params}`);
 		} else {
 			setSharableURL(null);
@@ -173,13 +176,12 @@ const App = () => {
 	};
 
 	const handleDataFromURL = objectsFromURL => {
-		if (Object.keys(savedObjects).length !== 0) {
+		if (Object.keys(savedObjects).length) {
 			saveCollectionToNewName();
 			clearSavedObjects();
 		}
-		const arrayOfSavedObjectsFromURL = JSON.parse(
-			decodeURIComponent(objectsFromURL)
-		);
+		const arrayOfSavedObjectsFromURL = objectsFromURL.split("_").map(id => hashids.decode(id))
+
 		arrayOfSavedObjectsFromURL.forEach(objectID => {
 			fetchAndSave(objectID);
 		});
