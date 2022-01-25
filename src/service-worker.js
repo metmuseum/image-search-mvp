@@ -1,4 +1,3 @@
-import { cacheOkAndOpaquePlugin } from "./helpers/cache"
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -96,11 +95,8 @@ registerRoute(
 
 registerRoute(
 	({ url }) => url.toString().toLowerCase().includes('unpkg.com/tesseract'),
-	new CacheFirst({
+	new NetworkFirst({
 		cacheName: 'tesseract',
-		plugins: [
-			cacheOkAndOpaquePlugin
-		]
 	})
 );
 
