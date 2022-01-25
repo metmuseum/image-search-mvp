@@ -11,7 +11,7 @@ import { clientsClaim } from 'workbox-core';
 // import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 clientsClaim();
@@ -95,7 +95,7 @@ registerRoute(
 
 registerRoute(
 	({ url }) => url.toString().toLowerCase().includes('unpkg.com/tesseract'),
-	new NetworkFirst({
+	new StaleWhileRevalidate({
 		cacheName: 'tesseract',
 	})
 );
