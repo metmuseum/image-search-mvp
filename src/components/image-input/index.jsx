@@ -6,10 +6,6 @@ const ImageInput = ({ searchObjects }) => {
 	const defaultButtonText = 'Scan Label Text';
 	const [imageInputText, setImageInputText] = useState(defaultButtonText);
 	const [worker] = useState(createWorker({
-		workerPath: '/public/vendor/tesseract/2_1_5/dist/worker.min.js',
-		langPath: '/public/vendor/tesseract/2_1_5/lang-data',
-		corePath: '/public/vendor/tesseract_core/tesseract-core.wasm',
-		// corePath: '/public/tesseract_core/tesseract-core.wasm.js',
 		logger: m => {
 			console.log(m);
 			let text = 'Processing...';
