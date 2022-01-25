@@ -1,3 +1,4 @@
+import { cacheOkAndOpaquePlugin } from "./helpers/cache"
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -11,7 +12,7 @@ import { clientsClaim } from 'workbox-core';
 // import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 clientsClaim();
@@ -95,8 +96,11 @@ registerRoute(
 
 registerRoute(
 	({ url }) => url.toString().toLowerCase().includes('unpkg.com/tesseract'),
-	new NetworkFirst({
+	new CacheFirst({
 		cacheName: 'tesseract',
+		plugins: [
+			cacheOkAndOpaquePlugin
+		]
 	})
 );
 
