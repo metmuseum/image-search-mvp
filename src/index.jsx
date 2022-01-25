@@ -15,14 +15,19 @@ ReactDOM.render(
 
 const warmup = async () => {
 	warmUpTesseract();
-	const objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
-	warmUpObjectJSON(objectIds);
-}
 
-// console.log("local storage:", Object.keys(JSON.parse(localStorage.getItem('savedObjects'))))
-// warmUpObjectJSON(Object.keys(JSON.parse(localStorage.getItem('savedObjects'))));
-const objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
-warmUpObjectJSON(objectIds);
+	let objectIds;
+	if (localStorage.getItem('savedObjects') === null) {
+		setTimeout(()=> {
+			// haha race condition waiting for react to save these 😐
+			objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
+			warmUpObjectJSON(objectIds);
+		}, 3000)
+	} else {
+		objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
+		warmUpObjectJSON(objectIds);
+	}
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
