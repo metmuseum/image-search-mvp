@@ -23,7 +23,7 @@ export const warmUpObjectJSON = async objectIds => {
 			.then(
 				({ additionalImages }) => {
 					if ((additionalImages ?? []).length) {
-						additionalImages.forEach(url => fetch(url, { mode: 'no-cors' }))
+						additionalImages.forEach(url => fetch(url.replace('original', 'web-large'), { mode: 'no-cors' }))
 					}
 				}
 			)
