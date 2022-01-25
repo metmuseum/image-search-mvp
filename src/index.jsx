@@ -16,17 +16,13 @@ ReactDOM.render(
 const warmup = async () => {
 	warmUpTesseract();
 
-	let objectIds;
-	if (localStorage.getItem('savedObjects') === null) {
-		setTimeout(()=> {
-			// haha race condition waiting for react to save these 😐
-			objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
+	setTimeout(()=> {
+		// haha race condition waiting for react to save these 😐
+		if (localStorage.getItem('savedObjects') !== null) {
+			let objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
 			warmUpObjectJSON(objectIds);
-		}, 3000)
-	} else {
-		objectIds = Object.keys(JSON.parse(localStorage.getItem('savedObjects')));
-		warmUpObjectJSON(objectIds);
-	}
+		}
+	}, 3000)
 }
 
 // If you want your app to work offline and load faster, you can change
