@@ -1,5 +1,5 @@
 import { createWorker } from 'tesseract.js';
-import { fetchObjects } from '../api';
+import { objectAPI } from '../api';
 
 export const warmUpTesseract = async () => {
 	console.log("running warm up")
@@ -16,5 +16,18 @@ export const warmUpTesseract = async () => {
 }
 
 export const warmUpObjectJSON = async objectIds => {
-	objectIds.forEach(id => fetchObjects(id))
+	console.log("ids", objectIds)
+	objectIds.forEach(id => {
+		fetch(`${objectAPI}${id}`)
+			.then(response => response.json())
+			.then(
+				data => {
+					console.log(data, data.additionalImages)
+					if ((data.additionalImages ?? []).length) {
+						data.additionalImages.forEach(url => fetch(url, { mode: 'no-cors' }))
+					}
+				}
+			)
+			.catch(err => console.error(err))
+	})
 }

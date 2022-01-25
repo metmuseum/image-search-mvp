@@ -15,7 +15,6 @@ const SavedObject = ({
 		onKeyDown={e => e.key === 'Enter' && handleNewActiveObject(objectNumber)}>
 		{primaryImageSmall && (
 			<img
-				crossOrigin
 				src={primaryImageSmall}
 				alt={objectTitle}
 				className="saved-object__image"

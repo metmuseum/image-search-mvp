@@ -49,7 +49,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				<div className="active-object__image-container">
 					<div className="active-object__images" draggable="true">
 						<img
-							crossOrigin
+
 							src={object.primaryImageSmall}
 							className="active-object__image active-object__image--multiple"
 							alt={object.objectName}
@@ -61,7 +61,6 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 							);
 							return (
 								<img
-									crossOrigin
 									key={smallImage}
 									src={smallImage}
 									loading="lazy"
@@ -75,7 +74,6 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 			)}
 			{object.primaryImageSmall && !object.additionalImages && (
 				<img
-					crossOrigin
 					src={object.primaryImageSmall}
 					className="active-object__image"
 					alt={object.objectName}
