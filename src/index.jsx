@@ -30,7 +30,7 @@ const warmup = async () => {
 	).catch(err=>console.error("there was an error warming up the cache for offline:", err))
 }
 
-warmup();
+// warmup(); comment this in to test in dev
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
