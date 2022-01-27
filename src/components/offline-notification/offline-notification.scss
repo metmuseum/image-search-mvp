@@ -1,0 +1,26 @@
+@use "../../variables.scss" as vars;
+@use "~@metmuseum/marble/src/base/base";
+
+.offline-notification {
+	@media (orientation: portrait) {
+		margin-top: vars.$sidebar-title-height;
+	}
+}
+
+.notification-banner {
+	padding: base.$spacing-xs base.$spacing-component-margin;
+}
+
+.notification-banner__header {
+	line-height: 1;
+	padding-bottom: 0;
+}
+
+.notification-banner__subtext {
+	font-size: base.$textsize-s;
+	font-weight: 400;
+}
+
+.notification-banner__link {
+	margin-top: base.$spacing-micro;
+}
