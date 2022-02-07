@@ -16,6 +16,10 @@
 	margin-bottom: $spacing-xxs;
 }
 
+.active-object__accession {
+	font-size: $textsize-xs;
+}
+
 .active-object__link {
 	@include typography-link();
 }
@@ -69,6 +73,7 @@
 }
 
 .active-object__images {
+	align-items: center;
 	margin-left: $spacing-component-margin;
 	margin-right: $spacing-component-margin;
 	white-space: nowrap;
