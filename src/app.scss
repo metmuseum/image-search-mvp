@@ -1,6 +1,5 @@
-$bp-small-screen: 950px;
-$sidebar-title-height: 60px;
 @use "~@metmuseum/marble/src/base/base";
+@use "variables.scss" as vars;
 @import "./fonts/font-declarations.scss";
 @import "./components/active-object/active-object";
 @import "./components/saved-object/saved-object";
@@ -35,6 +34,10 @@ h1, h2, h3, h4 {
 h1 {
 	@include typography-h2();
 	margin: 0;
+}
+
+h2 {
+	@include typography-h3();
 }
 
 .button {
@@ -96,7 +99,7 @@ h1 {
 
 .main__title-bar {
 	padding: $spacing-xxs $spacing-component-margin;
-	height: $sidebar-title-height;
+	height: vars.$sidebar-title-height;
 	align-items: center;
 	background-color: $color-white-opaque-90;
 	top: 0;
@@ -176,3 +179,4 @@ h1 {
 	list-style: none;
 	padding-left: 0;
 }
+

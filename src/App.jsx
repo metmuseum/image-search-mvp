@@ -5,14 +5,13 @@ import CollectionItem from './components/collection-item';
 import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
+import OfflineNotification from "./components/offline-notification";
+import { searchAPI, fetchObjects } from "./helpers/api";
 import Hashids from "hashids";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
-
-const searchAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/search?isOnView=true?q=';
-const objectAPI = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
 const hashids = new Hashids()
 let abortController = null;
@@ -52,25 +51,12 @@ const App = () => {
 		}
 	};
 
-	const fetchObjects = async objectID => {
-		const objects = await fetch(`${objectAPI}${objectID}`)
-			.then(response => response.json())
-			.catch(() => {
-				console.warn(`Couldn't hit API`);
-			});
-		return objects || null;
-	};
 
 	const fetchAndSave = async objectID => {
 		const newObject = await fetchObjects(objectID);
-		const newObjectReduced = (({ title, primaryImageSmall }) => ({
-			title,
-			primaryImageSmall
-		}))(newObject);
-
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
-
-		storedSavedObjects[newObject.objectID] = newObjectReduced;
+		let { title, primaryImageSmall } = newObject;
+		storedSavedObjects[newObject.objectID] = { title, primaryImageSmall };
 		setSavedObjects(storedSavedObjects);
 	};
 
@@ -255,6 +241,7 @@ const App = () => {
 	return (
 		<div className="object-search-app">
 			<main className="main__section" ref={objectSearchRef}>
+				<OfflineNotification />
 				<div className="main__title-bar">
 					<a
 						tabIndex="0"

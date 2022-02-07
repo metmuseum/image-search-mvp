@@ -49,6 +49,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				<div className="active-object__image-container">
 					<div className="active-object__images" draggable="true">
 						<img
+
 							src={object.primaryImageSmall}
 							className="active-object__image active-object__image--multiple"
 							alt={object.objectName}
