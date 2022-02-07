@@ -1,5 +1,6 @@
 .image-input__container {
-	flex-shrink: 0;
+	width: 140px;
+	transition: all 0.3s;
 }
 .image-input__input {
 	display: none;
@@ -10,5 +11,22 @@
 }
 
 .image-input__label.button {
-	min-width: 140px;
+	border-radius: 50px;
+}
+
+
+@media (orientation: portrait) {
+	.image-input__container {
+		.object-search__input:focus ~ & {
+			width: 40px;
+			.image-input__label.button {
+				background-color: $color-grey-700;
+				font-size: 0;
+				&:after {
+					content: "📷";
+					font-size: $textsize-m;
+				}
+			}
+		}
+	}
 }
