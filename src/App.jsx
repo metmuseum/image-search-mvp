@@ -91,9 +91,9 @@ const App = () => {
 		}
 	};
 
-	const searchObjects = async () => {
+	const searchObjects = async query => {
 		try {
-			await callSearchAPI();
+			await callSearchAPI(query);
 		} catch (e) {
 			console.warn(e);
 		} finally {
