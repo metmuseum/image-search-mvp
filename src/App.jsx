@@ -14,6 +14,7 @@ const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
 
 const hashids = new Hashids()
+let abortController = null;
 
 const App = () => {
 	const objectsGridRef = React.createRef();
@@ -71,11 +72,13 @@ const App = () => {
 		searchObjects(event.target.value);
 	}
 
-	const searchObjects = async query => {
+	const callSearchAPI = async query => {
+		abortController && abortController.abort();
+		abortController = new AbortController();
 		if (query !== searchQuery) {
 			setSearchQuery(query);
 		}
-		const request = await fetch(`${searchAPI}${query}`);
+		const request = await fetch(`${searchAPI}${query}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.objectIDs) {
 			setErrorMessage(null);
@@ -87,6 +90,16 @@ const App = () => {
 			setErrorMessage(null);
 		}
 	};
+
+	const searchObjects = async query => {
+		try {
+			await callSearchAPI(query);
+		} catch (e) {
+			console.warn(e);
+		} finally {
+			abortController = null;
+		}
+	}
 
 	const handleSaveObject = () => {
 		const newObject = {
