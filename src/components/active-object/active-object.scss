@@ -88,9 +88,12 @@
 	}
 }
 
+.active-object__image-container {
+	background-color: $color-grey-050;
+}
 
 .active-object__image-container::-webkit-scrollbar {
-	background: $color-white;
+	background-color: $color-grey-050;
 	border-radius: 10px;
 	height: 5px;
 	width: 5px;
@@ -100,6 +103,6 @@
 	background-color: $color-grey-700;
 	border-radius: 50px;
 	width: calc(200px + 2* #{$spacing-component-margin});
-	border-left: $spacing-component-margin solid $color-white;
-	border-right: $spacing-component-margin solid $color-white;
+	border-left: $spacing-component-margin solid $color-grey-050;
+	border-right: $spacing-component-margin solid $color-grey-050;
 }

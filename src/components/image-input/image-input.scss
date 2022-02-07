@@ -20,7 +20,6 @@
 		.object-search__input:focus ~ & {
 			width: 40px;
 			.image-input__label.button {
-				background-color: $color-grey-700;
 				font-size: 0;
 				&:after {
 					content: "📷";
