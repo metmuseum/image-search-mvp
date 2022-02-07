@@ -45,7 +45,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					</a>
 				</div>
 			</div>
-			{object.primaryImageSmall && object.additionalImages && (
+			{(object.primaryImageSmall && object.additionalImages?.length) ? (
 				<div className="active-object__image-container">
 					<div className="active-object__images" draggable="true">
 						<img
@@ -71,14 +71,14 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 						})}
 					</div>
 				</div>
-			)}
-			{object.primaryImageSmall && !object.additionalImages && (
+			) : ""}
+			{object.primaryImageSmall && !object.additionalImages?.length ? (
 				<img
 					src={object.primaryImageSmall}
 					className="active-object__image"
 					alt={object.objectName}
 				/>
-			)}
+			) : ""}
 			<div>
 				<div className="active-object__info">
 					<span className="active-object__key">Name: </span>
