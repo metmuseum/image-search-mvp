@@ -79,6 +79,18 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					alt={object.objectName}
 				/>
 			) : ""}
+			{!object.primaryImageSmall ? (
+				<div className="active-object__no-image">
+					<span>Due to rights restrictions this image can only be viewed on our </span>
+					<a
+						href={object.objectURL}
+						target="_blank"
+						rel="noreferrer"
+						className="active-object__link">
+						Object Page
+					</a>
+				</div>
+			) : "" }
 			<div>
 				<div className="active-object__info">
 					<span className="active-object__key">Name: </span>
@@ -116,7 +128,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				</div>
 			</div>
 
-			<div className="active-object__info">
+			{object.primaryImage ? (<div className="active-object__info">
 				<span className="active-object__key">
 					<a
 						target="_blank"
@@ -126,7 +138,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 						View High Resolution Image
 					</a>
 				</span>
-			</div>
+			</div>) : ""}
 
 		</div>
 	</div>
