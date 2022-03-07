@@ -22,11 +22,21 @@
 
 .active-object__link {
 	@include typography-link();
+	font-size: inherit;
+	line-height: 1;
+	padding-bottom: 0;
 }
 
 .active-object__image {
 	max-width: 100%;
 	max-height: 50vh;
+}
+
+.active-object__no-image {
+	background-color: $color-grey-100;
+	font-size: $textsize-xs;
+	margin-bottom: $spacing-xxs;
+	padding: $spacing-xs $spacing-xxs;
 }
 
 .active-object__key {
@@ -52,10 +62,6 @@
 .active-object__artist-role {
 	font-weight: 500;
 	margin-right: $spacing-micro;
-}
-
-.active-object__link {
-	@include typography-link();
 }
 
 .active-object__buttons {
