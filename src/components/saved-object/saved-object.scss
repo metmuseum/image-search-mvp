@@ -13,6 +13,17 @@
 	margin-bottom: 4px;
 }
 
+.saved-object__image--none {
+	align-items: center;
+	aspect-ratio: 1 / 1;
+	background-color: $color-grey-100;
+	display: flex;
+	font-size: $textsize-xs;
+	justify-content: center;
+	padding: $spacing-xxs;
+	text-align: center;
+}
+
 .saved-object__name {
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
