@@ -92,13 +92,15 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				</div>
 			) : "" }
 			<div>
-				<div className="active-object__info">
-					<span className="active-object__key">Name: </span>
-					<span
-						className="active-object__value"
-						dangerouslySetInnerHTML={{ __html: object.objectName }}
-					/>
-				</div>
+				{object.artistRole && object.objectName && (
+					<div className="active-object__info">
+						<span className="active-object__key">Name: </span>
+						<span
+							className="active-object__value"
+							dangerouslySetInnerHTML={{ __html: object.objectName }}
+						/>
+					</div>
+				)}
 				{object.artistRole && object.artistDisplayName && (
 					<div className="active-object__info">
 						<span className="active-object__key">{object.artistRole}: </span>

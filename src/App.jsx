@@ -57,7 +57,7 @@ const App = () => {
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
 		let { title, primaryImageSmall } = newObject;
 		storedSavedObjects[newObject.objectID] = { title, primaryImageSmall };
-		setSavedObjects(storedSavedObjects);
+		setSavedObjects(prevData => ({...prevData, ...storedSavedObjects}));
 	};
 
 	const handleNewActiveObject = async objectID => {
@@ -198,7 +198,6 @@ const App = () => {
 		arrayOfSavedObjectsFromURL.forEach(objectID => {
 			fetchAndSave(objectID);
 		});
-		handleNewActiveObject(arrayOfSavedObjectsFromURL[0]);
 	};
 
 	useEffect(() => {
@@ -214,7 +213,14 @@ const App = () => {
 		const objectsFromURL = params.get('o');
 		if (objectsFromURL) {
 			handleDataFromURL(objectsFromURL);
-			window.history.replaceState({}, '', `${url.origin}`);
+			params.delete(`o`);
+			const newRelativePathQuery = window.location.pathname + '?' + params.toString();
+			history.pushState(null, '', newRelativePathQuery);
+		}
+		//If there is an objectID in the URL load that object
+		const objectToLookUp = params.get('object');
+		if (objectToLookUp) {
+			handleNewActiveObject(objectToLookUp);
 		} else if (Object.keys(savedObjects).length > 0) {
 			// Set Initial Object to one from the user's saved objects.
 			handleNewActiveObject(Object.keys(savedObjects)[0]);
@@ -227,6 +233,15 @@ const App = () => {
 		);
 		setEditingExistingCollection(isExistingName);
 	}, [activeCollectionName]);
+
+	useEffect(() => {
+		if(activeObject.objectID) {
+			const newParams = new URLSearchParams();
+			newParams.set("object", activeObject.objectID);
+			const newRelativePathQuery = window.location.pathname + '?' + newParams.toString();
+			history.replaceState(null, '', newRelativePathQuery);
+		}
+	}, [activeObject.objectID]);
 
 	useEffect(() => {
 		localStorage.setItem('savedObjects', JSON.stringify(savedObjects));
