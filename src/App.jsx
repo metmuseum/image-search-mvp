@@ -57,7 +57,7 @@ const App = () => {
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
 		let { title, primaryImageSmall } = newObject;
 		storedSavedObjects[newObject.objectID] = { title, primaryImageSmall };
-		setSavedObjects(storedSavedObjects);
+		setSavedObjects(prevData => ({...prevData, ...storedSavedObjects}));
 	};
 
 	const handleNewActiveObject = async objectID => {
@@ -220,7 +220,6 @@ const App = () => {
 		//If there is an objectID in the URL load that object
 		const objectToLookUp = params.get('object');
 		if (objectToLookUp) {
-			console.log(objectToLookUp);
 			handleNewActiveObject(objectToLookUp);
 		} else if (Object.keys(savedObjects).length > 0) {
 			// Set Initial Object to one from the user's saved objects.
