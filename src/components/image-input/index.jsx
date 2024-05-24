@@ -18,7 +18,7 @@ const ImageInput = ({ searchObjects }) => {
 
 	const accessionRegex = /^[a-z]{0,4}?(.\d+(\.\d+)*.{4,}$)/i;
 
-	
+	const AZURE_API_IMAGE = "http://TBD.com/searchByImageStream"
 
 	const findTextToSearchFor = data => {
 		let accessionNumber = null;
@@ -88,7 +88,23 @@ const ImageInput = ({ searchObjects }) => {
 				const ctx = canvas.getContext('2d');
 				// Actual resizing
 				ctx.drawImage(img, 0, 0, width, height);
-				canvas.toBlob(readImage);
+				// canvas.toBlob(readImage);
+				canvas.toBlob(blob => {
+					const formData = new FormData();
+					formData.append('photo', blob, 'photo.png');
+			
+					fetch(AZURE_API_IMAGE, {
+						method: 'POST',
+						body: formData
+					})
+					.then(response => response.json())
+					.then(data => {
+						console.log('Success:', data);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+					});
+				}, 'image/png');
 			};
 			img.src = e.target.result;
 		};

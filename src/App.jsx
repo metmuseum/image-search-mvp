@@ -13,6 +13,8 @@ import './app.scss';
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
 
+const AZURE_API_TEXT = "http://TBD.com/searchByText"
+
 const hashids = new Hashids()
 let abortController = null;
 
@@ -78,6 +80,8 @@ const App = () => {
 		if (query !== searchQuery) {
 			setSearchQuery(query);
 		}
+
+		// update here: AZURE_API_TEXT
 		const request = await fetch(`${searchAPI}${query}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.objectIDs) {
