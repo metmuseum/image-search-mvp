@@ -6,14 +6,14 @@ import ImageInput from './components/image-input';
 import defaultObject from './helpers/defaultObjectModel';
 import SearchInput from "./components/search-input";
 import OfflineNotification from "./components/offline-notification";
-import { searchAPI, fetchObjects } from "./helpers/api";
+import { fetchObjects } from "./helpers/api";
 import Hashids from "hashids";
 import './app.scss';
 
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
 
-// const AZURE_API_TEXT = "http://TBD.com/searchByText"
+const AZURE_API_TEXT = "https://func-semantic-search.azurewebsites.net/api/SearchByText"
 
 const hashids = new Hashids()
 let abortController = null;
@@ -82,8 +82,25 @@ const App = () => {
 		}
 
 		// update here: AZURE_API_TEXT
-		const request = await fetch(`${searchAPI}${query}`, { signal: abortController.signal });
+		const request = await fetch(`${AZURE_API_TEXT}`, {
+			// Adding method type
+			method: "POST",
+
+			mode: "no-cors",
+      
+			// Adding body or contents to send
+			body: JSON.stringify({
+				text: query
+			}),
+			// Adding headers to the request
+			headers: {
+				"Content-type": "application/json"
+			},
+			signal: abortController.signal
+		})
+		// { signal: abortController.signal });
 		const response = await request.json();
+		console.log(response)
 		if (response.objectIDs) {
 			setErrorMessage(null);
 			const newObject = response.objectIDs[0];
