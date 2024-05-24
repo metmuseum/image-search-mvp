@@ -90,15 +90,15 @@ const App = () => {
 		// update here: AZURE_API_TEXT
 		const request = await fetch(AZURE_API_TEXT, {
 			// Adding method type
-			method: "post",
+			method: "POST",
 			// Adding body or contents to send
 			body: jsonAsText,
 			// Adding headers to the request
-			mode: "cors", // no-cors, *cors, same-origin
+			mode: "no-cors", // no-cors, *cors, same-origin
 			cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
 			credentials: "include", // include, *same-origin, omit
 			headers: {
-				"Content-type": "application/json"
+				"Content-Type": "application/json"
 			}
 			// signal: abortController.signal
 		})
