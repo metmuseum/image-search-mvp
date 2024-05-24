@@ -10,7 +10,7 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 						className="active-object__header"
 						dangerouslySetInnerHTML={{ __html: object.title }}
 					/>
-					<h2 className="active-object__artist">{object.artistDisplayName}
+					<h2 className="active-object__artist">{object.attribution}
 						{object.artistDisplayBio && (
 							<span className="active-object__display-bio">
 								({object.artistDisplayBio})
@@ -45,16 +45,16 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					</a>
 				</div>
 			</div>
-			{(object.primaryImageSmall && object.additionalImages?.length) ? (
+			{(object.imageUrl && object.additionalImages?.length) ? (
 				<div className="active-object__image-container">
 					<div className="active-object__images" draggable="true">
 						<img
 
-							src={object.primaryImageSmall}
+							src={object.imageUrl}
 							className="active-object__image active-object__image--multiple"
-							alt={object.objectName}
+							alt={object.title}
 						/>
-						{object.additionalImages.map(additionalImage => {
+						{object.additionalImages?.map(additionalImage => {
 							const smallImage = additionalImage.replace(
 								'original',
 								'web-large'
@@ -65,21 +65,21 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 									src={smallImage}
 									loading="lazy"
 									className="active-object__image active-object__image--multiple"
-									alt={object.objectName}
+									alt={object.title}
 								/>
 							);
 						})}
 					</div>
 				</div>
 			) : ""}
-			{object.primaryImageSmall && !object.additionalImages?.length ? (
+			{object.imageUrl && !object.additionalImages?.length ? (
 				<img
-					src={object.primaryImageSmall}
+					src={object.imageUrl}
 					className="active-object__image"
-					alt={object.objectName}
+					alt={object.title}
 				/>
 			) : ""}
-			{!object.primaryImageSmall ? (
+			{!object.imageUrl ? (
 				<div className="active-object__no-image">
 					<span>Due to rights restrictions this image can only be viewed on our </span>
 					<a
@@ -92,26 +92,31 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				</div>
 			) : "" }
 			<div>
-				{object.artistRole && object.objectName && (
+				{object.artistRole && object.title && (
 					<div className="active-object__info">
 						<span className="active-object__key">Name: </span>
 						<span
 							className="active-object__value"
-							dangerouslySetInnerHTML={{ __html: object.objectName }}
+							dangerouslySetInnerHTML={{ __html: object.title }}
 						/>
 					</div>
 				)}
-				{object.artistRole && object.artistDisplayName && (
+				{object.artistRole && object.attribution && (
 					<div className="active-object__info">
-						<span className="active-object__key">{object.artistRole}: </span>
+						<span className="active-object__key">{object.attribution}: </span>
 						<span className="active-object__value">
-							{object.artistDisplayName}
+							{object.attribution}
 						</span>
 					</div>
 				)}
 				<div className="active-object__info">
-					<span className="active-object__key">Department: </span>
-					<span className="active-object__value">{object.department}</span>
+					<span className="active-object__key">Dimensions: </span>
+					<span className="active-object__value">{object.dimensions}</span>
+				</div>
+
+				<div className="active-object__info">
+					<span className="active-object__key">Location/Gallery: </span>
+					<span className="active-object__value">{object.locationDescription}</span>
 				</div>
 
 				<div className="active-object__info">
@@ -120,22 +125,22 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				</div>
 
 				<div className="active-object__info">
-					<span className="active-object__key">Accession Number: </span>
-					<span className="active-object__value">{object.accessionNumber}</span>
+					<span className="active-object__key">Display Date: </span>
+					<span className="active-object__value">{object.displayDate}</span>
 				</div>
 
 				<div className="active-object__info">
-					<span className="active-object__key">Accession Year: </span>
-					<span className="active-object__value">{object.accessionYear}</span>
+					<span className="active-object__key">Accession Number: </span>
+					<span className="active-object__value">{object.accessionNum}</span>
 				</div>
 			</div>
 
-			{object.primaryImage ? (<div className="active-object__info">
+			{object.imageUrl ? (<div className="active-object__info">
 				<span className="active-object__key">
 					<a
 						target="_blank"
 						className="active-object__link"
-						href={object.primaryImage}
+						href={object.imageUrl}
 						rel="noreferrer">
 						View High Resolution Image
 					</a>

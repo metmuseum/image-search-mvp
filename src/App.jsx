@@ -57,8 +57,8 @@ const App = () => {
 	const fetchAndSave = async objectID => {
 		const newObject = await fetchObjects(objectID);
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
-		let { title, primaryImageSmall } = newObject;
-		storedSavedObjects[newObject.objectID] = { title, primaryImageSmall };
+		let { title, imageUrl } = newObject;
+		storedSavedObjects[newObject.objectID] = { title, imageUrl };
 		setSavedObjects(prevData => ({...prevData, ...storedSavedObjects}));
 	};
 
@@ -94,7 +94,7 @@ const App = () => {
 			}),
 			// Adding headers to the request
 			headers: {
-				"Content-type": "application/json"
+				"Content-type": "pplication/json; charset=utf-8"
 			},
 			signal: abortController.signal
 		})
@@ -125,7 +125,7 @@ const App = () => {
 	const handleSaveObject = () => {
 		const newObject = {
 			title: activeObject.title,
-			primaryImageSmall: activeObject.primaryImageSmall
+			imageUrl: activeObject.imageUrl
 		};
 
 		const tempObjectsRef = JSON.parse(localStorage.getItem('savedObjects')) || {};
@@ -359,7 +359,7 @@ const App = () => {
 									objectNumber={savedObject}
 									handleNewActiveObject={handleNewActiveObject}
 									objectTitle={savedObjects[savedObject].title}
-									primaryImageSmall={savedObjects[savedObject].primaryImageSmall}
+									imageUrl={savedObjects[savedObject].imageUrl}
 								/>
 							);
 						})}
