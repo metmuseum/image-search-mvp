@@ -13,7 +13,7 @@ import './app.scss';
 const url = new URL(`${window.location}`);
 const params = new URLSearchParams(url.search.slice(1));
 
-const AZURE_API_TEXT = "http://TBD.com/searchByText"
+// const AZURE_API_TEXT = "http://TBD.com/searchByText"
 
 const hashids = new Hashids()
 let abortController = null;
@@ -278,7 +278,7 @@ const App = () => {
 							onChange={handleSearch}
 						/>
 						<span>or</span>
-						<ImageInput searchObjects={searchObjects} />
+						<ImageInput />
 					</div>
 					{errorMessage ?
 						<div>
