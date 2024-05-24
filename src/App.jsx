@@ -95,8 +95,8 @@ const App = () => {
 			body: jsonAsText,
 			// Adding headers to the request
 			mode: "cors", // no-cors, *cors, same-origin
-			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-			credentials: "omit", // include, *same-origin, omit
+			cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: "include", // include, *same-origin, omit
 			headers: {
 				"Content-type": "application/json"
 			}
