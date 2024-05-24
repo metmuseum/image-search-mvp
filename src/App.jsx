@@ -81,22 +81,26 @@ const App = () => {
 			setSearchQuery(query);
 		}
 
-		// update here: AZURE_API_TEXT
-		const request = await fetch(`${AZURE_API_TEXT}`, {
-			// Adding method type
-			method: "POST",
+		const jsonAsText = JSON.stringify({
+			"text": query
+		})
 
-			mode: "no-cors",
-      
+		console.log(jsonAsText)
+
+		// update here: AZURE_API_TEXT
+		const request = await fetch(AZURE_API_TEXT, {
+			// Adding method type
+			method: "post",
 			// Adding body or contents to send
-			body: JSON.stringify({
-				text: query
-			}),
+			body: jsonAsText,
 			// Adding headers to the request
+			mode: "cors", // no-cors, *cors, same-origin
+			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: "omit", // include, *same-origin, omit
 			headers: {
 				"Content-type": "application/json"
-			},
-			signal: abortController.signal
+			}
+			// signal: abortController.signal
 		})
 		// { signal: abortController.signal });
 		const response = await request.json();
@@ -411,3 +415,4 @@ const App = () => {
 };
 
 export default App;
+
