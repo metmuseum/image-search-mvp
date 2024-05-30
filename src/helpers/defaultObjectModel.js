@@ -7,7 +7,7 @@ const defaultObject = {
 	"locationDescription": "157",
 	"medium": "Terracotta",
 	"dimensions": "2 13/16 \u00D7 1 11/16 \u00D7 5/8 in. (7.2 \u00D7 4.2 \u00D7 1.6 cm)",
-	"imageUrl": "https://images.metmuseum.org/CRDImages/gr/web-large/sf19835245.jpg",
+	"primaryImage": "https://images.metmuseum.org/CRDImages/gr/web-large/sf19835245.jpg",
 	"searchScore": 0.6144078
 };
 

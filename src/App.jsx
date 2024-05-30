@@ -57,8 +57,8 @@ const App = () => {
 	const fetchAndSave = async objectID => {
 		const newObject = await fetchObjects(objectID);
 		const storedSavedObjects = JSON.parse(localStorage.getItem('savedObjects'));
-		let { title, imageUrl } = newObject;
-		storedSavedObjects[newObject.objectID] = { title, imageUrl };
+		let { title, primaryImage, primaryImageSmall } = newObject;
+		storedSavedObjects[newObject.objectID] = { title, primaryImage, primaryImageSmall };
 		setSavedObjects(prevData => ({...prevData, ...storedSavedObjects}));
 	};
 
@@ -113,7 +113,9 @@ const App = () => {
 		// new Azure version
 		} else if (response.similarImages) {
 			setErrorMessage(null);
-			const newObject = response.similarImages[0].objectId;
+			// could randomize?
+			const index = Math.floor(Math.random()*response.similarImages.length)
+			const newObject = response.similarImages[index].objectId;
 			handleNewActiveObject(newObject);
 		} else if (query.length > 0) {
 			setErrorMessage("No objects on view match your query");
@@ -135,7 +137,8 @@ const App = () => {
 	const handleSaveObject = () => {
 		const newObject = {
 			title: activeObject.title,
-			imageUrl: activeObject.imageUrl
+			primaryImage: activeObject.primaryImage,
+			primaryImageSmall: activeObject.primaryImageSmall
 		};
 
 		const tempObjectsRef = JSON.parse(localStorage.getItem('savedObjects')) || {};
@@ -369,7 +372,8 @@ const App = () => {
 									objectNumber={savedObject}
 									handleNewActiveObject={handleNewActiveObject}
 									objectTitle={savedObjects[savedObject].title}
-									imageUrl={savedObjects[savedObject].imageUrl}
+									primaryImage={savedObjects[savedObject].primaryImage}
+									primaryImageSmall={savedObjects[savedObject].primaryImageSmall}
 								/>
 							);
 						})}

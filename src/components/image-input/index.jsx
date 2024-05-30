@@ -4,9 +4,10 @@ const ImageInput = () => {
 	const defaultButtonText = '📸';
 	const [imageInputText, setImageInputText] = useState(defaultButtonText);
 
-	const AZURE_API_IMAGE = "http://TBD.com/searchByImageStream"
+	const AZURE_API_IMAGE = "https://func-semantic-search.azurewebsites.net/api/SearchByImageStream"
 
 	const resizeImage = imageFile => {
+		console.log("Resizing")
 		const reader = new FileReader();
 		reader.onload = e => {
 			const img = document.createElement('img');
@@ -38,12 +39,16 @@ const ImageInput = () => {
 				ctx.drawImage(img, 0, 0, width, height);
 				// canvas.toBlob(readImage);
 				canvas.toBlob(blob => {
+					console.log("Posting")
 					const formData = new FormData();
 					formData.append('photo', blob, 'photo.png');
 
 					fetch(AZURE_API_IMAGE, {
 						method: 'POST',
-						body: formData
+						body: formData,
+						headers: {
+							"Content-type": "application/octet-stream"
+						}
 					})
 						.then(response => response.json())
 						.then(data => {
