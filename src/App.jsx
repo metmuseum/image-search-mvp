@@ -67,6 +67,7 @@ const App = () => {
 			behavior: 'smooth'
 		});
 		const newActiveObject = await fetchObjects(objectID);
+		console.log(newActiveObject)
 		setActiveObject(newActiveObject);
 	};
 
@@ -82,7 +83,7 @@ const App = () => {
 		}
 
 		const jsonAsText = JSON.stringify({
-			"text": query
+			'text': query
 		})
 
 		console.log(jsonAsText)
@@ -90,7 +91,7 @@ const App = () => {
 		// update here: AZURE_API_TEXT
 		const request = await fetch(AZURE_API_TEXT, {
 			// Adding method type
-			method: "post",
+			method: "POST",
 			// Adding body or contents to send
 			body: jsonAsText,
 			// Adding headers to the request
@@ -108,6 +109,11 @@ const App = () => {
 		if (response.objectIDs) {
 			setErrorMessage(null);
 			const newObject = response.objectIDs[0];
+			handleNewActiveObject(newObject);
+		// new Azure version
+		} else if (response.similarImages) {
+			setErrorMessage(null);
+			const newObject = response.similarImages[0].objectId;
 			handleNewActiveObject(newObject);
 		} else if (query.length > 0) {
 			setErrorMessage("No objects on view match your query");

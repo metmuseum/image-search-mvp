@@ -45,12 +45,12 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					</a>
 				</div>
 			</div>
-			{(object.imageUrl && object.additionalImages?.length) ? (
+			{(object.primaryImage && object.additionalImages?.length) ? (
 				<div className="active-object__image-container">
 					<div className="active-object__images" draggable="true">
 						<img
 
-							src={object.imageUrl}
+							src={object.primaryImage}
 							className="active-object__image active-object__image--multiple"
 							alt={object.title}
 						/>
@@ -72,14 +72,14 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 					</div>
 				</div>
 			) : ""}
-			{object.imageUrl && !object.additionalImages?.length ? (
+			{object.primaryImage && !object.additionalImages?.length ? (
 				<img
-					src={object.imageUrl}
+					src={object.primaryImage}
 					className="active-object__image"
 					alt={object.title}
 				/>
 			) : ""}
-			{!object.imageUrl ? (
+			{!object.primaryImage ? (
 				<div className="active-object__no-image">
 					<span>Due to rights restrictions this image can only be viewed on our </span>
 					<a
@@ -135,12 +135,12 @@ const ActiveObject = ({ object, handleSavedObjectChange, savedObjects }) => (
 				</div>
 			</div>
 
-			{object.imageUrl ? (<div className="active-object__info">
+			{object.primaryImage ? (<div className="active-object__info">
 				<span className="active-object__key">
 					<a
 						target="_blank"
 						className="active-object__link"
-						href={object.imageUrl}
+						href={object.primaryImage}
 						rel="noreferrer">
 						View High Resolution Image
 					</a>
