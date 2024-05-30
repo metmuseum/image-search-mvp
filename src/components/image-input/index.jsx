@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import App from '../../App'
 
 const ImageInput = () => {
 	const defaultButtonText = '📸';
@@ -38,31 +39,41 @@ const ImageInput = () => {
 				// Actual resizing
 				ctx.drawImage(img, 0, 0, width, height);
 				// canvas.toBlob(readImage);
-				canvas.toBlob(blob => {
-					console.log("Posting")
-					const formData = new FormData();
-					formData.append('photo', blob, 'photo.png');
-
-					fetch(AZURE_API_IMAGE, {
-						method: 'POST',
-						body: formData,
-						headers: {
-							"Content-type": "application/octet-stream"
-						}
-					})
-						.then(response => response.json())
-						.then(data => {
-							console.log('Success:', data);
-						})
-						.catch(error => {
-							console.error('Error:', error);
-						});
-				}, 'image/png');
+				canvas.toBlob(postBlob, 'image/png');
 			};
 			img.src = e.target.result;
 		};
 		reader.readAsDataURL(imageFile);
 	};
+
+	const postBlob = async blob => {
+		console.log("Posting")
+		// const formData = new FormData();
+		// formData.append('image', blob, 'photo.png');
+		
+		const request = await fetch(AZURE_API_IMAGE, {
+			method: 'POST',
+			body: blob,
+			headers: {
+				"Content-type": "application/octet-stream"
+			}
+		})
+		console.log(request)
+		const response = await request.json();
+		if (response.objectIDs) {
+			App.setErrorMessage(null);
+			const newObject = response.objectIDs[0];
+			App.handleNewActiveObject(newObject);
+		// new Azure version
+		} else if (response.similarImages) {
+			App.setErrorMessage(null);
+			// could randomize?
+			const index = Math.floor(Math.random()*response.similarImages.length)
+			const newObject = response.similarImages[index].objectId;
+			App.handleNewActiveObject(newObject);
+		}
+
+	}
 
 	const handleOnChange = e => {
 		const file = e.target.files[0];
