@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import App from '../../App'
+import App from '../../App';
 
 const ImageInput = () => {
 	const defaultButtonText = '📸';
@@ -47,33 +47,26 @@ const ImageInput = () => {
 	};
 
 	const postBlob = async blob => {
-		console.log("Posting")
-		// const formData = new FormData();
-		// formData.append('image', blob, 'photo.png');
-		
-		const request = await fetch(AZURE_API_IMAGE, {
-			method: 'POST',
-			body: blob,
-			headers: {
-				"Content-type": "application/octet-stream"
+		console.log("Uploading file...");
+		const request = new XMLHttpRequest();
+		const formData = new FormData();
+	
+		request.open("POST", AZURE_API_IMAGE, true);
+		request.onreadystatechange = () => {
+			if (request.readyState === 4 && request.status === 200) {
+				const similarImages = JSON.parse(request.response)?.similarImages;
+				App.setErrorMessage(null);
+				const newObject = similarImages[0];
+				App.handleNewActiveObject(newObject);
 			}
-		})
-		console.log(request)
-		const response = await request.json();
-		if (response.objectIDs) {
-			App.setErrorMessage(null);
-			const newObject = response.objectIDs[0];
-			App.handleNewActiveObject(newObject);
-		// new Azure version
-		} else if (response.similarImages) {
-			App.setErrorMessage(null);
-			// could randomize?
-			const index = Math.floor(Math.random()*response.similarImages.length)
-			const newObject = response.similarImages[index].objectId;
-			App.handleNewActiveObject(newObject);
-		}
+		};
+		formData.append("file", blob);
+		request.send(formData);
+	};
+	
+	
 
-	}
+	// }
 
 	const handleOnChange = e => {
 		const file = e.target.files[0];
