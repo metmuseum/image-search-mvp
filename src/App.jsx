@@ -308,7 +308,7 @@ const App = () => {
 							onChange={handleSearch}
 						/>
 						<span>or</span>
-						<ImageInput />
+						<ImageInput handleNewActiveObject={handleNewActiveObject} />
 					</div>
 					{errorMessage ?
 						<div>
