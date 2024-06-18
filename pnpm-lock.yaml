@@ -6850,7 +6850,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
-      ws: 7.5.9
+      ws: 7.5.10
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -10870,8 +10870,8 @@ packages:
       typedarray-to-buffer: 3.1.5
     dev: false
 
-  /ws@7.5.9:
-    resolution: {integrity: sha512-F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==}
+  /ws@7.5.10:
+    resolution: {integrity: sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -10950,23 +10950,8 @@ packages:
     resolution: {integrity: sha512-+J9RrgTKOmlxFSDHo0pI1xM6BLVUv+o0ZT9ANtCxGkjIVCCUdx9alUF8Gm+dGLKbkkkidWIHFDZHDMpfITt4+w==}
     dev: false
 
-  github.com/metmuseum/marble/8723cec8374f0535c9dc88e7ea9a714448b1c8db:
-    resolution: {tarball: https://codeload.github.com/metmuseum/marble/tar.gz/8723cec8374f0535c9dc88e7ea9a714448b1c8db}
-    name: '@metmuseum/marble'
-    version: 0.13.7
-    requiresBuild: true
-    dependencies:
-      '@vimeo/player': 2.23.0
-      flickity: github.com/stephenhmarsh/flickity/82579c63f46d03b1a2f636d931a5e9f0d2a67cee
-      flickity-imagesloaded: 2.0.0
-      intersection-observer: 0.7.0
-      npm: 6.14.15
-      smoothscroll-polyfill: 0.4.4
-      vanilla-lazyload: 12.5.1
-    dev: false
-
-  github.com/stephenhmarsh/flickity/82579c63f46d03b1a2f636d931a5e9f0d2a67cee:
-    resolution: {tarball: https://codeload.github.com/stephenhmarsh/flickity/tar.gz/82579c63f46d03b1a2f636d931a5e9f0d2a67cee}
+  git@github.com+stephenhmarsh/flickity/82579c63f46d03b1a2f636d931a5e9f0d2a67cee:
+    resolution: {commit: 82579c63f46d03b1a2f636d931a5e9f0d2a67cee, repo: git@github.com:stephenhmarsh/flickity.git, type: git}
     name: flickity
     version: 2.3.0
     dependencies:
@@ -10976,4 +10961,19 @@ packages:
       get-size: 2.0.3
       unidragger: 2.4.0
       unipointer: 2.4.0
+    dev: false
+
+  github.com/metmuseum/marble/8723cec8374f0535c9dc88e7ea9a714448b1c8db:
+    resolution: {tarball: https://codeload.github.com/metmuseum/marble/tar.gz/8723cec8374f0535c9dc88e7ea9a714448b1c8db}
+    name: '@metmuseum/marble'
+    version: 0.13.7
+    requiresBuild: true
+    dependencies:
+      '@vimeo/player': 2.23.0
+      flickity: git@github.com+stephenhmarsh/flickity/82579c63f46d03b1a2f636d931a5e9f0d2a67cee
+      flickity-imagesloaded: 2.0.0
+      intersection-observer: 0.7.0
+      npm: 6.14.15
+      smoothscroll-polyfill: 0.4.4
+      vanilla-lazyload: 12.5.1
     dev: false
